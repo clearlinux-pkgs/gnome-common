@@ -4,7 +4,7 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 1
+Release  : 2
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Summary  : No detailed summary available
@@ -46,9 +46,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1513199385
+export SOURCE_DATE_EPOCH=1513293489
 %configure --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -58,7 +58,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1513199385
+export SOURCE_DATE_EPOCH=1513293489
 rm -rf %{buildroot}
 %make_install
 
@@ -71,4 +71,6 @@ rm -rf %{buildroot}
 
 %files dev
 %defattr(-,root,root,-)
+%exclude /usr/share/aclocal/ax_check_enable_debug.m4
+%exclude /usr/share/aclocal/ax_code_coverage.m4
 /usr/share/aclocal/*.m4
