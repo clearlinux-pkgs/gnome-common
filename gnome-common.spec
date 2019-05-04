@@ -4,7 +4,7 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 6
+Release  : 7
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Summary  : Common development macros for GNOME
@@ -58,7 +58,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1556986798
+export SOURCE_DATE_EPOCH=1557002292
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -77,7 +77,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1556986798
+export SOURCE_DATE_EPOCH=1557002292
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gnome-common
 cp COPYING %{buildroot}/usr/share/package-licenses/gnome-common/COPYING
