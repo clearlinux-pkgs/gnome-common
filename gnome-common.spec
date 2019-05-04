@@ -4,13 +4,15 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 5
+Release  : 6
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
-Summary  : No detailed summary available
+Summary  : Common development macros for GNOME
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: gnome-common-bin
+Requires: gnome-common-bin = %{version}-%{release}
+Requires: gnome-common-license = %{version}-%{release}
+BuildRequires : buildreq-gnome
 
 %description
 This module contains various files needed to bootstrap GNOME modules
@@ -23,6 +25,7 @@ should be packaged with their respective modules).
 %package bin
 Summary: bin components for the gnome-common package.
 Group: Binaries
+Requires: gnome-common-license = %{version}-%{release}
 
 %description bin
 bin components for the gnome-common package.
@@ -31,11 +34,20 @@ bin components for the gnome-common package.
 %package dev
 Summary: dev components for the gnome-common package.
 Group: Development
-Requires: gnome-common-bin
-Provides: gnome-common-devel
+Requires: gnome-common-bin = %{version}-%{release}
+Provides: gnome-common-devel = %{version}-%{release}
+Requires: gnome-common = %{version}-%{release}
 
 %description dev
 dev components for the gnome-common package.
+
+
+%package license
+Summary: license components for the gnome-common package.
+Group: Default
+
+%description license
+license components for the gnome-common package.
 
 
 %prep
@@ -46,7 +58,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1513293489
+export SOURCE_DATE_EPOCH=1556986798
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -58,8 +77,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1513293489
+export SOURCE_DATE_EPOCH=1556986798
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/gnome-common
+cp COPYING %{buildroot}/usr/share/package-licenses/gnome-common/COPYING
 %make_install
 
 %files
@@ -74,3 +95,7 @@ rm -rf %{buildroot}
 %exclude /usr/share/aclocal/ax_check_enable_debug.m4
 %exclude /usr/share/aclocal/ax_code_coverage.m4
 /usr/share/aclocal/*.m4
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gnome-common/COPYING
