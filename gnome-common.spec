@@ -4,10 +4,10 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 7
+Release  : 8
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
-Summary  : Common development macros for GNOME
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: gnome-common-bin = %{version}-%{release}
@@ -52,36 +52,41 @@ license components for the gnome-common package.
 
 %prep
 %setup -q -n gnome-common-3.18.0
+cd %{_builddir}/gnome-common-3.18.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557002292
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1586229962
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1557002292
+export SOURCE_DATE_EPOCH=1586229962
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gnome-common
-cp COPYING %{buildroot}/usr/share/package-licenses/gnome-common/COPYING
+cp %{_builddir}/gnome-common-3.18.0/COPYING %{buildroot}/usr/share/package-licenses/gnome-common/4cc77b90af91e615a64ae04893fdffa7939db84c
 %make_install
+## Remove excluded files
+rm -f %{buildroot}/usr/share/aclocal/ax_code_coverage.m4
+rm -f %{buildroot}/usr/share/aclocal/ax_check_enable_debug.m4
 
 %files
 %defattr(-,root,root,-)
@@ -92,10 +97,8 @@ cp COPYING %{buildroot}/usr/share/package-licenses/gnome-common/COPYING
 
 %files dev
 %defattr(-,root,root,-)
-%exclude /usr/share/aclocal/ax_check_enable_debug.m4
-%exclude /usr/share/aclocal/ax_code_coverage.m4
 /usr/share/aclocal/*.m4
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gnome-common/COPYING
+/usr/share/package-licenses/gnome-common/4cc77b90af91e615a64ae04893fdffa7939db84c
