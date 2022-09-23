@@ -4,7 +4,7 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 8
+Release  : 9
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Summary  : No detailed summary available
