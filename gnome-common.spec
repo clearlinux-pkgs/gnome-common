@@ -4,7 +4,7 @@
 #
 Name     : gnome-common
 Version  : 3.18.0
-Release  : 10
+Release  : 11
 URL      : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
 Summary  : No detailed summary available
@@ -59,15 +59,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586229962
+export SOURCE_DATE_EPOCH=1664147683
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -76,17 +76,17 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1586229962
+export SOURCE_DATE_EPOCH=1664147683
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gnome-common
-cp %{_builddir}/gnome-common-3.18.0/COPYING %{buildroot}/usr/share/package-licenses/gnome-common/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/gnome-common-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gnome-common/4cc77b90af91e615a64ae04893fdffa7939db84c || :
 %make_install
 ## Remove excluded files
-rm -f %{buildroot}/usr/share/aclocal/ax_code_coverage.m4
-rm -f %{buildroot}/usr/share/aclocal/ax_check_enable_debug.m4
+rm -f %{buildroot}*/usr/share/aclocal/ax_code_coverage.m4
+rm -f %{buildroot}*/usr/share/aclocal/ax_check_enable_debug.m4
 
 %files
 %defattr(-,root,root,-)
